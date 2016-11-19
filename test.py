@@ -7,7 +7,7 @@ imageFile = open('test.jpg','rb')
 image = base64.b64encode(imageFile.read())
 print "Sending 'Hello, World'..."
 js = {'msg':'hello','image':image}
-ws.send(json.dumps(js))
+ws.send(js)
 print "Sent"
 print "Reeiving..."
 result =  ws.recv()
