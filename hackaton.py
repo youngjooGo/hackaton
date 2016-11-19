@@ -65,12 +65,15 @@ def get_other_dairy(index,number):
 
 def set_my_dairy(dairy):
 	try:
+		print 'ddskjs fucking!!'
+		'''
 		db = MySQLdb.connect("localhost","root",'y0108009','hackaton')
 		cursor = db.cursor()
 		c_idx = '12'
 		cursor.execute("Insert into dairy value(%s,%s,%s,%s,%s,%s)"% (dairy['user_idx'],c_idx,current_time,dairy['content'],dairy['subject'],dairy['image']))
 		db.commit()
 		db.close()
+		'''
 		return 0
 	except Exception, e:
 		return -1
@@ -101,7 +104,6 @@ class Dairy_Handler(tornado.websocket.WebSocketHandler):
 		#image_string = cStringIO.StringIO(base64.b64decode(msg['image']))
 		#image = Image.open(image_string)
 		#image.save('out.jpg')
-		"""
 		if js['type'] == 'showMyList':
 			#json format => {'type':'showMyList','user_idx':int}
 			result = get_dairy_list(js['user_idx'])
@@ -124,7 +126,7 @@ class Dairy_Handler(tornado.websocket.WebSocketHandler):
 			result = set_reply(js['reply'])
 				
 		self.write_message(result)
-		"""
+
 		#TODO
 		#self.write_message(message)
 
