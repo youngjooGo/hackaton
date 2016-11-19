@@ -75,8 +75,9 @@ def set_my_dairy(dairy):
 	
 		db = MySQLdb.connect("localhost","root",'y0108009','hackaton')
 		cursor = db.cursor()
-		c_idx = '16'
-		cursor.execute("Insert into dairy value(%s,%s,'2012-11-11 11:11:11',\'%s\',%s)"% (dairy['user_idx'],c_idx,dairy['content'],dairy['subject']))
+		c_idx = '18'
+		date = '2012-11-11 11:11:11'
+		cursor.execute("Insert into dairy(user_idx,c_idx,date,content,subject) value(%s,%s,\'%s\',\'%s\',%s)"% (dairy['user_idx'],c_idx,date,dairy['content'],dairy['subject']))
 		db.commit()
 		db.close()
 
