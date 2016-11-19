@@ -77,7 +77,7 @@ def set_my_dairy(dairy):
 		cursor = db.cursor()
 		c_idx = '18'
 		date = '2012-11-11 11:11:11'
-		cursor.execute("Insert into dairy(user_idx,c_idx,date,content,subject) value(%s,%s,\'%s\',\'%s\',%s)"% (dairy['user_idx'],c_idx,date,dairy['content'],dairy['subject']))
+		cursor.execute("Insert into dairy(user_idx,c_idx,date,content,subject) value(%d,%s,\'%s\',\'%s\',%d)"% (dairy['user_idx'],c_idx,date,dairy['content'].encode('latin-1','ignore'),dairy['subject']))
 		db.commit()
 		db.close()
 
