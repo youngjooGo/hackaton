@@ -22,7 +22,7 @@ def get_dairy_list(index):
 	try:
 		db = MySQLdb.connect("localhost",'root','y0108009','hackaton')
 		cursor = db.cursor()
-		cursor.execute("select * from dairy where user_idx = %d" % index)
+		cursor.execute("select * from diary where user_idx = %d" % index)
 		data = cursor.fetchall()
 		db.close()
 		return data
@@ -33,7 +33,7 @@ def get_my_dairy(index):
 	try:
 		db = MySQLdb.connect("localhost","root",'y0108009','hackaton')
 		cursor = db.cursor()
-		cursor.execute("select * from dairy where c_idx = %d" % index)
+		cursor.execute("select * from diary where c_idx = %d" % index)
 		data = cursor.fetchone()
 		db.close()
 		return data
@@ -55,7 +55,7 @@ def get_other_dairy(index,number):
 	try:
 		db = MySQLdb.connect("localhost","root",'y0108009','hackaton')
 		cursor = db.cursor()
-		cursor.execute("select * from dairy where user_idx is not %d" % index)
+		cursor.execute("select * from diary where user_idx is not %d" % index)
 		data = cursor.fetchall()
 		db.close()
 
@@ -65,19 +65,13 @@ def get_other_dairy(index,number):
 
 def set_my_dairy(dairy):
 	try:
-		print 'ddskjs fucking!!'
-		print dairy
-		print '#@#@$dfglkjdflgdjlkg'
-		print dairy['user_idx'] , type(dairy['user_idx'])
-		print dairy['content'] , type(dairy['content'])
-		print dairy['subject'] , type(dairy['subject'])
-
+		
 	
 		db = MySQLdb.connect("localhost","root",'y0108009','hackaton')
 		cursor = db.cursor()
 		c_idx = '18'
 		date = '2012-11-11 11:11:11'
-		cursor.execute("Insert into dairy(user_idx,c_idx,date,content,subject) value(%d,%s,\'%s\',\'%s\',%d)"% (dairy['user_idx'],c_idx,date,dairy['content'].encode('latin-1','ignore'),dairy['subject']))
+		cursor.execute("Insert into diary(user_idx,c_idx,date,content,subject) value(%d,%s,\'%s\',\'%s\',%d)"% (dairy['user_idx'],c_idx,date,dairy['content'].encode('latin-1','ignore'),dairy['subject']))
 		db.commit()
 		db.close()
 
@@ -91,7 +85,7 @@ def set_reply(reply):
 	try:
 		db = MySQLdb.connect("localhost","root",'y0108009','hackaton')
 		cursor = db.cursor()
-		cursor.execute("Insert into reply value(%d,%s,%s)"% (reply['c_idx'],reply['content'],reply['is_frist']))
+		cursor.execute("Insert into reply value(%d,\'%s\',%s)"% (reply['c_idx'],reply['content'],reply['is_frist']))
 		db.commit()
 		db.close()
 	
