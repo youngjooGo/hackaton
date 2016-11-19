@@ -67,16 +67,16 @@ class Dairy_Handler(tornado.websocket.WebSocketHandler):
 		if js['type'] == 'showMyList':
 			#json format => {'type':'showMyList','user_idx':int}
 			result = get_dairy_list(js['user_idx'])
-		else if js['type'] == 'showMyDairy':
+		elif js['type'] == 'showMyDairy':
 			#json format => {'type':'showMyDairy','user_idx':int,'c_idx':int}
 			result = get_my_dairy(js['c_idx'])
-		else if js['type'] == 'showOtherDairy':
+		elif js['type'] == 'showOtherDairy':
 			#json format => {'type':'showOtherDairy','user_idx':int,'number':int}
 			result = get_other_dairy(js['user_idx'],js['number'])
-		else if js['type'] == 'writeMyDairy':
+		elif js['type'] == 'writeMyDairy':
 			#json format => {'type':'wirteMyDairy','dairy':{'content:'@@','subject':int,'image':'null or imagestream'}}
 			result = set_my_dairy(js['dairy'])
-		else if js['type'] == 'writeReply':
+		elif js['type'] == 'writeReply':
 			#json format => {'tyep':'writeReply','reply':{'content':'@@@',c_idx:int,is_frist:boolean}}
 			result = set_reply(js['reply'])
 	
