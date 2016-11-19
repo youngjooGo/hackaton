@@ -114,6 +114,8 @@ class Dairy_Handler(tornado.websocket.WebSocketHandler):
 			#json format => {'type':'showReply','c_index':int}
 			result = get_reply(js['c_idx'])
 		elif js['type'] == 'writeMyDairy':
+			print 'writemydairy'
+			print js['dairy']['content']
 			#json format => {'type':'wirteMyDairy','dairy':{'user_idx':int,'content:'@@','subject':int,'image':'null or imagestream'}}
 			result = set_my_dairy(js['dairy'])
 		elif js['type'] == 'writeReply':
