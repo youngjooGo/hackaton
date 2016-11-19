@@ -70,7 +70,7 @@ def set_my_dairy(dairy):
 		print 'asdfs'
 		db = MySQLdb.connect("localhost","root",'y0108009','hackaton')
 		cursor = db.cursor()
-		c_idx = uuid.uuid4().int & (1<<32)-1
+		c_idx = uuid.uuid4().int & (1<<16)-1
 		c = datetime.datetime.now()
 		date = c.isoformat()
 		cursor.execute("Insert into diary(user_idx,c_idx,date,content,subject) value(%d,%s,\'%s\',\'%s\',%d)"% (dairy['user_idx'],c_idx,date,dairy['content'].encode('utf-8'),dairy['subject']))
@@ -106,6 +106,7 @@ class Dairy_Handler(tornado.websocket.WebSocketHandler):
 		try:
 			print 'on message'
 			print msg
+			msg = msg.replace("\r\n", "\\n")
 			result = ''
 			self.write_message("ll")
 			js = json.loads(msg)
