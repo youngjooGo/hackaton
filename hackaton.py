@@ -106,41 +106,46 @@ class Dairy_Handler(tornado.websocket.WebSocketHandler):
 		print("Websocket opened")
 
 	def on_message(self,msg):
-		print 'on message'
-		print msg
-		result = ''
-		self.write_message("ll")
-		js = json.loads(msg)
-		print js['type']
-		#image_string = cStringIO.StringIO(base64.b64decode(msg['image']))
-		#image = Image.open(image_string)
-		#image.save('out.jpg')
-		if js['type'] == 'showMyList':
-			#json format => {'type':'showMyList','user_idx':int}
-			result = get_dairy_list(js['user_idx'])
-		elif js['type'] == 'showMyDairy':
-			#json format => {'type':'showMyDairy','user_idx':int,'c_idx':int}
-			result = get_my_dairy(js['c_idx'])
-		elif js['type'] == 'showOtherDairy':
-			#json format => {'type':'showOtherDairy','user_idx':int,'number':int}
-			result = get_other_dairy(js['user_idx'],js['number'])
-		elif js['type'] == 'showReply':
-			#json format => {'type':'showReply','c_index':int}
-			result = get_reply(js['c_idx'])
-		elif js['type'] == 'writeMyDairy':
-			print 'writemydairy'
-			print js['dairy']['content']
-			print js['dairy']
-			#json format => {'type':'writeMyDairy','dairy':{'user_idx':int,'content:'@@','subject':int,'image':'null or imagestream'}}
-			result = set_my_dairy(js['dairy'])
-		elif js['type'] == 'writeReply':
-			#json format => {'tyep':'writeReply','reply':{'content':'@@@',c_idx:int,is_frist:boolean}}
-			result = set_reply(js['reply'])
-				
-		#self.write_message(result)
+		try:
+			print 'on message'
+			print msg
+			result = ''
+			self.write_message("ll")
+			js = json.loads(msg)
+			print js['type']
+			#image_string = cStringIO.StringIO(base64.b64decode(msg['image']))
+			#image = Image.open(image_string)
+			#image.save('out.jpg')
+			if js['type'] == 'showMyList':
+				#json format => {'type':'showMyList','user_idx':int}
+				result = get_dairy_list(js['user_idx'])
+			elif js['type'] == 'showMyDairy':
+				#json format => {'type':'showMyDairy','user_idx':int,'c_idx':int}
+				result = get_my_dairy(js['c_idx'])
+			elif js['type'] == 'showOtherDairy':
+				#json format => {'type':'showOtherDairy','user_idx':int,'number':int}
+				result = get_other_dairy(js['user_idx'],js['number'])
+			elif js['type'] == 'showReply':
+				#json format => {'type':'showReply','c_index':int}
+				result = get_reply(js['c_idx'])
+			elif js['type'] == 'writeMyDairy':
+				print 'writemydairy'
+				print js['dairy']['content']
+				print js['dairy']
+				#json format => {'type':'writeMyDairy','dairy':{'user_idx':int,'content:'@@','subject':int,'image':'null or imagestream'}}
+				result = set_my_dairy(js['dairy'])
+			elif js['type'] == 'writeReply':
+				#json format => {'tyep':'writeReply','reply':{'content':'@@@',c_idx:int,is_frist:boolean}}
+				result = set_reply(js['reply'])
+					
+			#self.write_message(result)
 
-		#TODO
-		#self.write_message(message)
+			#TODO
+			#self.write_message(message)
+		except Exception, e:
+			print '#@#@$@#$@#$@#$@#@'
+			import traceback
+			traceback.print_exc()
 
 	def on_close(self):
 		print "bye"
