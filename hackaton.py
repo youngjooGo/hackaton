@@ -72,13 +72,15 @@ def set_my_dairy(dairy):
 	
 		db = MySQLdb.connect("localhost","root",'y0108009','hackaton')
 		cursor = db.cursor()
-		c_idx = '15'
+		c_idx = '16'
 		cursor.execute("Insert into dairy value(%s,%s,'2012-11-11 11:11:11',\'%s\',%s)"% (dairy['user_idx'],c_idx,dairy['content'],dairy['subject']))
 		db.commit()
 		db.close()
 
 		return 0
 	except Exception, e:
+		import traceback
+		traceback.print_exc()
 		return -1
 
 def set_reply(reply):
@@ -88,10 +90,10 @@ def set_reply(reply):
 		cursor.execute("Insert into reply value(%d,%s,%s)"% (reply['c_idx'],reply['content'],reply['is_frist']))
 		db.commit()
 		db.close()
-		print 'bbbb'
+	
 		return 0
 	except Exception, e:
-		print 'aaaaaaa'
+
 		return -1
 
 
