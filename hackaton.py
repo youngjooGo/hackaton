@@ -15,7 +15,8 @@ import json
 import cStringIO
 import base64
 from PIL import Image
-
+import uuid
+import datetime
 
 
 def get_dairy_list(index):
@@ -69,8 +70,9 @@ def set_my_dairy(dairy):
 	
 		db = MySQLdb.connect("localhost","root",'y0108009','hackaton')
 		cursor = db.cursor()
-		c_idx = '18'
-		date = '2012-11-11 11:11:11'
+		c_idx = uuid.uuid4().int & (1<<64)-1
+		c = datetime.datetime.now()
+		date = c.isoformat()
 		cursor.execute("Insert into diary(user_idx,c_idx,date,content,subject) value(%d,%s,\'%s\',\'%s\',%d)"% (dairy['user_idx'],c_idx,date,dairy['content'].encode('latin-1','ignore'),dairy['subject']))
 		db.commit()
 		db.close()
