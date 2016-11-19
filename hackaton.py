@@ -66,6 +66,8 @@ def get_other_dairy(index,number):
 def set_my_dairy(dairy):
 	try:
 		print 'ddskjs fucking!!'
+		print dairy
+		print '#@#@$dfglkjdflgdjlkg'
 		print dairy['user_idx'],c_idx,current_time,dairy['content'],dairy['subject'],dairy['image']
 		'''
 		db = MySQLdb.connect("localhost","root",'y0108009','hackaton')
@@ -120,6 +122,7 @@ class Dairy_Handler(tornado.websocket.WebSocketHandler):
 		elif js['type'] == 'writeMyDairy':
 			print 'writemydairy'
 			print js['dairy']['content']
+			print js['dairy']
 			#json format => {'type':'writeMyDairy','dairy':{'user_idx':int,'content:'@@','subject':int,'image':'null or imagestream'}}
 			result = set_my_dairy(js['dairy'])
 		elif js['type'] == 'writeReply':
