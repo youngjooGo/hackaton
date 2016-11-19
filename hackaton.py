@@ -58,11 +58,12 @@ class Dairy_Handler(tornado.websocket.WebSocketHandler):
 
 	def on_message(self,msg):
 		print 'on message'
-
+		print msg
+		self.write_message("hello!")
 		js = json.loads(msg)
-		image_string = cStringIO.StringIO(base64.b64decode(msg['image']))
-		image = Image.open(image_string)
-		image.save('out.jpg')
+		#image_string = cStringIO.StringIO(base64.b64decode(msg['image']))
+		#image = Image.open(image_string)
+		#image.save('out.jpg')
 
 		if js['type'] == 'showMyList':
 			#json format => {'type':'showMyList','user_idx':int}
