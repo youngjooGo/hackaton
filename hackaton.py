@@ -68,7 +68,10 @@ def set_my_dairy(dairy):
 		print 'ddskjs fucking!!'
 		print dairy
 		print '#@#@$dfglkjdflgdjlkg'
-		print dairy['user_idx'],c_idx,current_time,dairy['content'],dairy['subject'],dairy['image']
+		print dairy['user_idx'] , type(dairy['user_idx'])
+		print dairy['content'] , type(dairy['content'])
+		print dairy['subject'] , type(dairy['subject'])
+
 	
 		db = MySQLdb.connect("localhost","root",'y0108009','hackaton')
 		cursor = db.cursor()
