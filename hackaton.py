@@ -69,14 +69,14 @@ def set_my_dairy(dairy):
 		print dairy
 		print '#@#@$dfglkjdflgdjlkg'
 		print dairy['user_idx'],c_idx,current_time,dairy['content'],dairy['subject'],dairy['image']
-		'''
+	
 		db = MySQLdb.connect("localhost","root",'y0108009','hackaton')
 		cursor = db.cursor()
 		c_idx = '15'
-		cursor.execute("Insert into dairy value(%s,%s,%s,%s,%s,%s)"% (dairy['user_idx'],c_idx,current_time,dairy['content'],dairy['subject'],dairy['image']))
+		cursor.execute("Insert into dairy value(%s,%s,'2012-11-11 11:11:11',\'%s\',%s)"% (dairy['user_idx'],c_idx,dairy['content'],dairy['subject']))
 		db.commit()
 		db.close()
-		'''
+
 		return 0
 	except Exception, e:
 		return -1
@@ -88,8 +88,10 @@ def set_reply(reply):
 		cursor.execute("Insert into reply value(%d,%s,%s)"% (reply['c_idx'],reply['content'],reply['is_frist']))
 		db.commit()
 		db.close()
+		print 'bbbb'
 		return 0
 	except Exception, e:
+		print 'aaaaaaa'
 		return -1
 
 
