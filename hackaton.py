@@ -73,7 +73,7 @@ def set_my_dairy(dairy):
 		c_idx = uuid.uuid4().int & (1<<64)-1
 		c = datetime.datetime.now()
 		date = c.isoformat()
-		cursor.execute("Insert into diary(user_idx,c_idx,date,content,subject) value(%d,%s,\'%s\',\'%s\',%d)"% (dairy['user_idx'],c_idx,date,dairy['content'].encode('latin-1','ignore'),dairy['subject']))
+		cursor.execute("Insert into diary(user_idx,c_idx,date,content,subject) value(%d,%s,\'%s\',\'%s\',%d)"% (dairy['user_idx'],c_idx,date,dairy['content'].encode('utf-8'),dairy['subject']))
 		db.commit()
 		db.close()
 
