@@ -97,10 +97,11 @@ class Dairy_Handler(tornado.websocket.WebSocketHandler):
 		result = ''
 		self.write_message("ll")
 		js = json.loads(msg)
+		print js['type']
 		#image_string = cStringIO.StringIO(base64.b64decode(msg['image']))
 		#image = Image.open(image_string)
 		#image.save('out.jpg')
-
+		"""
 		if js['type'] == 'showMyList':
 			#json format => {'type':'showMyList','user_idx':int}
 			result = get_dairy_list(js['user_idx'])
@@ -116,14 +117,14 @@ class Dairy_Handler(tornado.websocket.WebSocketHandler):
 		elif js['type'] == 'writeMyDairy':
 			print 'writemydairy'
 			print js['dairy']['content']
-			#json format => {'type':'wirteMyDairy','dairy':{'user_idx':int,'content:'@@','subject':int,'image':'null or imagestream'}}
+			#json format => {'type':'writeMyDairy','dairy':{'user_idx':int,'content:'@@','subject':int,'image':'null or imagestream'}}
 			result = set_my_dairy(js['dairy'])
 		elif js['type'] == 'writeReply':
 			#json format => {'tyep':'writeReply','reply':{'content':'@@@',c_idx:int,is_frist:boolean}}
 			result = set_reply(js['reply'])
-		
+				
 		self.write_message(result)
-
+		"""
 		#TODO
 		#self.write_message(message)
 
