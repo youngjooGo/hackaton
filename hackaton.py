@@ -27,10 +27,11 @@ def get_dairy_list(index):
 		cursor.execute("select c_idx from diary where user_idx = %d" % index)
 		data = cursor.fetchall()
 		db.close()
-		result = []
+		result_list = []
 		for i in data:
-			result.append(i[0])
-		return str(result)
+			result_list.append(i[0])
+		result = "{'tag':'c_idx_list','list':"+str(result_list)+"}"
+		return result
 	except Exception, e:
 		return 'fail'
 
@@ -44,7 +45,7 @@ def get_my_dairy(index):
 		db.close()
 		lenght = len(data)
 		idx = random.randrange(0,lenght)
-		result = "{'c_idx':"+str(data[idx][1])+",'date':"+str(data[idx][2])+",'content':"+str(data[idx][3])+",'subject':"+str(data[idx][4])+"}"
+		result = "{'tag':'dairy','content':{'c_idx':"+str(data[idx][1])+",'date':"+str(data[idx][2])+",'content':"+str(data[idx][3])+",'subject':"+str(data[idx][4])+"}}"
 		return data[idx]
 	except Exception, e:
 		import traceback
