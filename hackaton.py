@@ -24,10 +24,13 @@ def get_dairy_list(index):
 	try:
 		db = MySQLdb.connect("localhost",'root','y0108009','hackaton')
 		cursor = db.cursor()
-		cursor.execute("select * from diary where user_idx = %d" % index)
+		cursor.execute("select c_idx from diary where user_idx = %d" % index)
 		data = cursor.fetchall()
 		db.close()
-		return data
+		result = []
+		for i in data:
+			result.append(i[0])
+		return str(result)
 	except Exception, e:
 		return 'fail'
 
@@ -41,20 +44,24 @@ def get_my_dairy(index):
 		lenght = len(data)
 		idx = random.randrange(0,lenght)
 		db.close()
+		result = "{'c_idx':"+data[idx][1]+",'date':"+data[idx][2]+",'content':"+data[idx][3]+",'subject':"+data[idx][4]+"}"
 		return data[idx]
 	except Exception, e:
 		import traceback
 		traceback.print_exc()
 		return 'fail'
 
-def get_reply(index):
+def get_like(index):
 	try:
 		db = MySQLdb.connect("localhost","root",'y0108009','hackaton')
 		cursor = db.cursor()
-		cursor.execute("select * from reply where c_idx = %d" % index)
+		cursor.execute("select * from amountLike where c_idx = %d" % index)
 		data = cursor.fetchone()
 		db.close()
-		return data
+		result = 0;
+		for i in data:
+			result += i[1]
+		return str(result)
 	except Exception, e:
 		return 'fail'
 
@@ -89,11 +96,11 @@ def set_my_dairy(dairy):
 		traceback.print_exc()
 		return 'fail'
 
-def set_reply(reply):
+def set_like(reply):
 	try:
 		db = MySQLdb.connect("localhost","root",'y0108009','hackaton')
 		cursor = db.cursor()
-		cursor.execute("Insert into reply value(%d,\'%s\',%s)"% (reply['c_idx'],reply['content'],reply['is_frist']))
+		cursor.execute("Insert into amountLike value(%d,%d)"% (reply['c_idx'],reply['is_like']))
 		db.commit()
 		db.close()
 	
@@ -128,19 +135,19 @@ class Dairy_Handler(tornado.websocket.WebSocketHandler):
 				result = get_other_dairy(js['user_idx'],js['number'])
 			elif js['type'] == 'showReply':
 				#json format => {'type':'showReply','c_index':int}
-				result = get_reply(js['c_idx'])
+				result = like_reply(js['c_idx'])
 			elif js['type'] == 'writeMyDairy':
 				print 'writemydairy'
 				print js['dairy']['content']
 				print js['dairy']
 				#json format => {'type':'writeMyDairy','dairy':{'user_idx':int,'content:'@@','subject':int,'image':'null or imagestream'}}
 				result = set_my_dairy(js['dairy'])
-			elif js['type'] == 'writeReply':
-				#json format => {'tyep':'writeReply','reply':{'content':'@@@',c_idx:int,is_frist:boolean}}
-				result = set_reply(js['reply'])
+			elif js['type'] == 'writeLike':
+				#json format => {'tyep':'writeLike','like':{'c_ids':'@@@',is_like':int}}
+				result = set_like(js['like'])
 			
 			print result
-			self.write_message(str(result))
+			self.write_message(result)
 
 			#TODO
 			#self.write_message(message)
