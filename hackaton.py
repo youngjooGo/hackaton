@@ -106,7 +106,8 @@ def set_like(reply):
 	
 		return 'success'
 	except Exception, e:
-
+		import traceback
+		traceback.print_exc()
 		return 'fail'
 
 
