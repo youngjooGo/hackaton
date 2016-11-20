@@ -43,6 +43,8 @@ def get_my_dairy(index):
 		db.close()
 		return data[idx]
 	except Exception, e:
+		import traceback
+		traceback.print_exc()
 		return 'fail'
 
 def get_reply(index):
@@ -109,18 +111,16 @@ class Dairy_Handler(tornado.websocket.WebSocketHandler):
 		try:
 			print 'on message'
 			print msg
-			msg = msg.replace("\r\n", "\\n")
+			msg = msg.replace("\n", "\\n")
 			result = ''
-			self.write_message("ll")
+
 			js = json.loads(msg)
-			print js['type']
-			#image_string = cStringIO.StringIO(base64.b64decode(msg['image']))
-			#image = Image.open(image_string)
-			#image.save('out.jpg')
+			
 			if js['type'] == 'showMyList':
 				#json format => {'type':'showMyList','user_idx':int}
 				result = get_dairy_list(js['user_idx'])
 			elif js['type'] == 'showMyDairy':
+				print 'showMyDairy'
 				#json format => {'type':'showMyDairy','user_idx':int,'c_idx':int}
 				result = get_my_dairy(js['c_idx'])
 			elif js['type'] == 'showOtherDairy':
@@ -138,7 +138,8 @@ class Dairy_Handler(tornado.websocket.WebSocketHandler):
 			elif js['type'] == 'writeReply':
 				#json format => {'tyep':'writeReply','reply':{'content':'@@@',c_idx:int,is_frist:boolean}}
 				result = set_reply(js['reply'])
-					
+			
+			print result
 			self.write_message(result)
 
 			#TODO
