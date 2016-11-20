@@ -45,7 +45,7 @@ def get_my_dairy(index):
 		db.close()
 		lenght = len(data)
 		idx = random.randrange(0,lenght)
-		result_like = like_reply(data[idx][1])
+		result_like = get_like(data[idx][1])
 		result = "{'tag':'dairy','content':{'c_idx':"+str(data[idx][1])+",'date':\'"+str(data[idx][2])+"\','content':\'"+str(data[idx][3])+"\','subject':"+str(data[idx][4])+",'like':"+str(result_like)+"}}"
 		return result
 	except Exception, e:
