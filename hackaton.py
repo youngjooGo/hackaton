@@ -110,7 +110,7 @@ def set_like(reply):
 		db.commit()
 		db.close()
 		result_like = get_like(reply['c_idx'])
-		result = "{type:'like_result','number':"+str(result_like)+"}"
+		result = "{'tag':'like_result','number':"+str(result_like)+"}"
 		return result
 	except Exception, e:
 		import traceback
