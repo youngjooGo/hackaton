@@ -45,7 +45,8 @@ def get_my_dairy(index):
 		db.close()
 		lenght = len(data)
 		idx = random.randrange(0,lenght)
-		result = "{'tag':'dairy','content':{'c_idx':"+str(data[idx][1])+",'date':\'"+str(data[idx][2])+"\','content':\'"+str(data[idx][3])+"\','subject':"+str(data[idx][4])+"}}"
+		result_like = like_reply(data[idx][1])
+		result = "{'tag':'dairy','content':{'c_idx':"+str(data[idx][1])+",'date':\'"+str(data[idx][2])+"\','content':\'"+str(data[idx][3])+"\','subject':"+str(data[idx][4])+",'like':"+str(result_like)+"}}"
 		return result
 	except Exception, e:
 		import traceback
@@ -137,9 +138,9 @@ class Dairy_Handler(tornado.websocket.WebSocketHandler):
 			elif js['type'] == 'showOtherDairy':
 				#json format => {'type':'showOtherDairy','user_idx':int,'number':int}
 				result = get_other_dairy(js['user_idx'])
-			elif js['type'] == 'showLike':
+			#elif js['type'] == 'showLike':
 				#json format => {'type':'showLike','c_index':int}
-				result = like_reply(js['c_idx'])
+			#	result = like_reply(js['c_idx'])
 			elif js['type'] == 'writeMyDairy':
 				print 'writemydairy'
 				print js['dairy']['content']
