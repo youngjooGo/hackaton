@@ -45,7 +45,7 @@ def get_my_dairy(index):
 		db.close()
 		lenght = len(data)
 		idx = random.randrange(0,lenght)
-		result = "{'tag':'dairy','content':{'c_idx':"+str(data[idx][1])+",'date':"+str(data[idx][2])+",'content':"+str(data[idx][3])+",'subject':"+str(data[idx][4])+"}}"
+		result = "{'tag':'dairy','content':{'c_idx':"+str(data[idx][1])+",'date':\'"+str(data[idx][2])+"\','content':\'"+str(data[idx][3])+"\','subject':"+str(data[idx][4])+"}}"
 		return result
 	except Exception, e:
 		import traceback
