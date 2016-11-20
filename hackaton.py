@@ -65,6 +65,8 @@ def get_like(index):
 			result += i[1]
 		return str(result)
 	except Exception, e:
+		import traceback
+		traceback.print_exc()
 		return 'fail'
 
 def get_other_dairy(index):
