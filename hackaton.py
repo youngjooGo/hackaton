@@ -111,7 +111,6 @@ def set_like(reply):
 		db.close()
 		result_like = get_like(reply['c_idx'])
 		return "{type:'like_result','number':"+str(result_like+"}"
-
 	except Exception, e:
 		import traceback
 		traceback.print_exc()
