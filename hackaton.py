@@ -140,7 +140,7 @@ class Dairy_Handler(tornado.websocket.WebSocketHandler):
 				result = set_reply(js['reply'])
 			
 			print result
-			self.write_message(result)
+			self.write_message(str(result))
 
 			#TODO
 			#self.write_message(message)
