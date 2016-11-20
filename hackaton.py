@@ -58,7 +58,7 @@ def get_like(index):
 		db = MySQLdb.connect("localhost","root",'y0108009','hackaton')
 		cursor = db.cursor()
 		cursor.execute("select * from amountLike where c_idx = %d" % index)
-		data = cursor.fetchone()
+		data = cursor.fetchall()
 		db.close()
 		result = 0;
 		for i in data:
@@ -109,8 +109,9 @@ def set_like(reply):
 		cursor.execute("Insert into amountLike value(%d,%d)"% (reply['c_idx'],reply['is_like']))
 		db.commit()
 		db.close()
-	
-		return 'success'
+		result_like = get_like(reply['c_idx'])
+		return "{type:'like_result','number':"+str(result_like+"}"
+
 	except Exception, e:
 		import traceback
 		traceback.print_exc()
