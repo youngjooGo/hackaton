@@ -17,6 +17,7 @@ import base64
 from PIL import Image
 import uuid
 import datetime
+import random
 
 
 def get_dairy_list(index):
@@ -28,18 +29,21 @@ def get_dairy_list(index):
 		db.close()
 		return data
 	except Exception, e:
-		return -1
+		return 'fail'
 
 def get_my_dairy(index):
 	try:
 		db = MySQLdb.connect("localhost","root",'y0108009','hackaton')
 		cursor = db.cursor()
-		cursor.execute("select * from diary where c_idx = %d" % index)
-		data = cursor.fetchone()
+		#cursor.execute("select * from diary where c_idx = %d" % index)
+		cursor.execute("select * from diary")
+		data = cursor.fetchall()
+		lenght = len(data)
+		idx = random.randrange(0,lenght)
 		db.close()
-		return data
+		return data[idx]
 	except Exception, e:
-		return -1
+		return 'fail'
 
 def get_reply(index):
 	try:
@@ -50,7 +54,7 @@ def get_reply(index):
 		db.close()
 		return data
 	except Exception, e:
-		return -1
+		return 'fail'
 
 def get_other_dairy(index,number):
 	try:
@@ -62,7 +66,7 @@ def get_other_dairy(index,number):
 
 		#TODO random
 	except Exception, e:
-		return -1
+		return 'fail'
 
 def set_my_dairy(dairy):
 	try:
@@ -77,12 +81,11 @@ def set_my_dairy(dairy):
 		db.commit()
 		db.close()
 
-		return 0
+		return 'success'
 	except Exception, e:
-		print 'aaaa'
 		import traceback
 		traceback.print_exc()
-		return -1
+		return 'fail'
 
 def set_reply(reply):
 	try:
@@ -92,10 +95,10 @@ def set_reply(reply):
 		db.commit()
 		db.close()
 	
-		return 0
+		return 'success'
 	except Exception, e:
 
-		return -1
+		return 'fail'
 
 
 class Dairy_Handler(tornado.websocket.WebSocketHandler):
@@ -136,7 +139,7 @@ class Dairy_Handler(tornado.websocket.WebSocketHandler):
 				#json format => {'tyep':'writeReply','reply':{'content':'@@@',c_idx:int,is_frist:boolean}}
 				result = set_reply(js['reply'])
 					
-			#self.write_message(result)
+			self.write_message(result)
 
 			#TODO
 			#self.write_message(message)
